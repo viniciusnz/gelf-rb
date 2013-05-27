@@ -16,7 +16,11 @@ module GELF
       message, progname = if args.count == 2
                             [args[0], args[1]]
                           elsif args.count == 0
-                            [yield, default_options['facility']]
+                            if block_given?
+                              [yield, default_options['facility']]
+                            else
+                              ['No message', default_options['facility']]
+                            end
                           elsif block_given?
                             [yield, args[0]]
                           else
